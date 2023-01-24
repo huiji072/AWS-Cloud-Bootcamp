@@ -2,6 +2,21 @@ from urllib.request import urlopen
 import numpy
 import pandas
 from bs4 import BeautifulSoup
+import logging
+logging.basicConfig(level=logging.DEBUG)
+
+from slack_sdk import WebClient
+from slack_sdk.errors import SlackApiError
+
+# slack_token = 'xoxb-4577538761255-4666924670823-P9gcxT45qFeM97r3vA4WSivp' # Bot OAuth Token
+# client = WebClient(token=slack_token)
+
+def Msg_bot(slack_message):
+    slack_token = 'xoxb-4577538761255-4666924670823-P9gcxT45qFeM97r3vA4WSivp'
+    channel = '#seek'
+    message = slack_message
+    client = WebClient(token=slack_token)
+    client.chat_postMessage(channel=channel, text=message)
 
 # seek 채용 사이트
 html = urlopen("https://www.seek.com.au/jobs")
@@ -76,7 +91,9 @@ numpy_emp_info_all = []
 # 배열 -> numpy -> DataFrame -> csv파일에 저장
 for eia in emp_info_all:
     numpy_emp_info_all.append(numpy.array(eia))
+    for e in eia:
+        Msg_bot(e)  
 
 df_emp_info_all = pandas.DataFrame(numpy_emp_info_all, columns=['companyName', 'locate', 'job'])
-print(df_emp_info_all)
-df_emp_info_all.to_csv('/Users/kimhuiji/Documents/seek_csv/seek_data.csv')
+# print(df_emp_info_all)
+# df_emp_info_all.to_csv('/Users/kimhuiji/Documents/seek_csv/seek_data.csv')

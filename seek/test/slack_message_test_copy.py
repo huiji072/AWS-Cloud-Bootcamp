@@ -4,6 +4,39 @@ from urllib.request import urlopen
 import numpy
 import pandas
 from bs4 import BeautifulSoup
+import logging
+logging.basicConfig(level=logging.DEBUG)
+from slack_sdk import WebClient
+from slack_sdk.errors import SlackApiError
+
+
+def Msg_bot(slack_message):
+    slack_token = 'xoxb-4577538761255-4666924670823-P9gcxT45qFeM97r3vA4WSivp'
+    channel = '#seek'
+    message = slack_message
+    client = WebClient(token=slack_token)
+    client.chat_postMessage(
+
+        channel=channel, 
+        blocks = [
+            {
+                "type": "section",
+                "text": {
+                    "type": "mrkdwn",
+                    "text": "seek 채용 공고:\n*<google.com|Fred Enriquez - Time Off request>*"
+                }
+            },
+            {
+                "type": "section",
+                "text": {
+                    "type": "mrkdwn",
+                    "text": message
+                    # "text": "*url:* url-data\n*company-name:* company-name\n*locate:* locate\n*job:* job\n*today:*  today \n*post:* post"
+                }
+            }
+        ]
+    
+        )
 
 emp_info_all = []
 for pageNum in range(3):
@@ -73,28 +106,23 @@ for pageNum in range(3):
                 start_index = emp_info.index('All SEEK products')+1
             
 
-        # end_index = 0
-        # if 'More jobs from this company' in emp_info:
-        #     end_index = emp_info.index('More jobs from this company')
-        # else:
-        #     for ei in emp_info:
-        #         if ei[0] == '$':
-        #             end_index = emp_info.index(ei)
-
         # 위치
         locate = emp_info[start_index]
         # 직무
         job = emp_info[start_index+1]
 
-        # 데이터에 [link, company_name, locate, job] 넣기
+        # 데이터에 [link, company_name, locate, job, today, post] 넣기
         emp_info_all.append([link, company_name, locate, job, today, post])
 
     
 numpy_emp_info_all = []
-# 배열 -> numpy -> DataFrame -> csv파일에 저장
+# 배열 -> numpy -
 for eia in emp_info_all:
     numpy_emp_info_all.append(numpy.array(eia))
+    for e in eia:
+        Msg_bot(ei)
+    print('-----------')
 
+# DataFrame -> csv
 df_emp_info_all = pandas.DataFrame(numpy_emp_info_all, columns=['link', 'companyName', 'locate', 'job', 'today', 'post'])
-
-df_emp_info_all.to_csv('/home/huiji/Seek_Crolling/seek_data.csv')
+# df_emp_info_all.to_csv('/Users/kimhuiji/Documents/seek_csv/seek_data.csv')
