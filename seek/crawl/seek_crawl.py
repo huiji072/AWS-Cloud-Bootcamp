@@ -35,7 +35,7 @@ def Msg_bot(link, company_name, locate, job, post, desc):
                     "*위치:*\n" + locate + "\n"
                     "*직무:*\n" + job + "\n"
                     "*공고날짜:*\n" + post + "\n"
-                    "*지원서:*\n" + desc
+                    "*지원서에 양식:*\n" + desc
 			}
 		}
 	]
