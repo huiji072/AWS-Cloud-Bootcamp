@@ -8,13 +8,19 @@ import logging
 logging.basicConfig(level=logging.DEBUG)
 from slack_sdk import WebClient
 from slack_sdk.errors import SlackApiError
+import os
+from dotenv import load_dotenv
 
+load_dotenv()
 
 def Msg_bot(link, company_name, locate, job, post, desc):
-    slack_token = 'xoxb-4577538761255-4666924670823-P9gcxT45qFeM97r3vA4WSivp'
+    # 채널 토큰
+    slack_token = os.environ.get("SLACK_TOKEN")
+    # 채널명
     channel = '#seek'
-    # message = slack_message
+
     client = WebClient(token=slack_token)
+    # 슬랙에 전송할 메세지 형식
     client.chat_postMessage(
 
         channel=channel, 
@@ -35,13 +41,14 @@ def Msg_bot(link, company_name, locate, job, post, desc):
                     "*위치:*\n" + locate + "\n"
                     "*직무:*\n" + job + "\n"
                     "*공고날짜:*\n" + post + "\n"
-                    "*지원서에 양식:*\n" + desc
+                    "*지원서 양식:*\n" + desc
 			}
 		}
 	]
 )
-
+# 모든 채용 정보[회사명, 위치, 직무, 공고날짜, 지원서양식]
 emp_info_all = []
+
 for pageNum in range(1):
 
     # seek 채용 사이트
