@@ -49,7 +49,7 @@ def Msg_bot(link, company_name, locate, job, post, desc):
 # 모든 채용 정보[회사명, 위치, 직무, 공고날짜, 지원서양식]
 emp_info_all = []
 
-for pageNum in range(1):
+for pageNum in range(3):
 
     # seek 채용 사이트
     html = urlopen("https://www.seek.com.au/jobs?page=" + str(pageNum) )
