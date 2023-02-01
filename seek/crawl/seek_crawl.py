@@ -19,6 +19,9 @@ def Msg_bot(link, company_name, locate, job, post, desc):
     # 채널명
     channel = '#seek'
 
+    if desc == '':
+        desc = '지원서 양식이 없습니다.'
+
     client = WebClient(token=slack_token)
     # 슬랙에 전송할 메세지 형식
     client.chat_postMessage(
