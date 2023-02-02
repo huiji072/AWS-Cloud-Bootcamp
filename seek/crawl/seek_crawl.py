@@ -13,12 +13,14 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+# 슬랙에 전송
 def Msg_bot(link, company_name, locate, job, post, desc):
     # 채널 토큰
     slack_token = os.environ.get("SLACK_TOKEN")
     # 채널명
     channel = '#seek'
 
+    # 지원서 양식이 없을 때
     if desc == '':
         desc = '지원서 양식이 없습니다.'
 
@@ -82,7 +84,6 @@ for pageNum in range(3):
 
         # 회사명
         company_name = bsObject.find('span', class_="yvsb870 _14uh9944u _1cshjhy0 _1cshjhy2 _1cshjhy21 _1d0g9qk4 _1cshjhyd").text
-        # print("회사명: ", company_name)
 
         # 채용 공고 가져오기
         data_all = bsObject.find_all('span', class_="yvsb870 _14uh9944u _1cshjhy0 _1cshjhy1 _1cshjhy21 _1d0g9qk4 _1cshjhya")
