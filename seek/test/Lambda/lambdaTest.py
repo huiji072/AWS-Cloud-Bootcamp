@@ -10,3 +10,4 @@ def handler(event, context):
 
 
     
+    # 데이터 잘  쌓ㅣㅏㄴ 더기x

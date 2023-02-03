@@ -15,7 +15,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # 슬랙에 전송
-def Msg_bot(link, company_name, locate, job, post, desc):
+def Msg_bot(link, company_name, locate, job, post, desc, collectionDate):
     # 채널 토큰
     slack_token = os.environ.get("SLACK_TOKEN")
     # 채널명
@@ -40,15 +40,19 @@ def Msg_bot(link, company_name, locate, job, post, desc):
 			}
 		},
 		{
+        # 내가 수집한 날짜, seek(회사명))추가해야 함
+        
 			"type": "section",
 			"text": {
 				"type": "mrkdwn",
 				"text": 
+                    "*사이트: SEEK*\n"
                     "*회사명:*\n" + company_name + "\n"
                     "*위치:*\n" + locate + "\n"
                     "*직무:*\n" + job + "\n"
                     "*공고날짜:*\n" + post + "\n"
-                    "*지원서 양식:*\n" + desc
+                    "*지원서 양식:*\n" + desc + "\n"
+                    "*데이터 수집 날짜:*\n" + collectionDate + "\n"
 			}
 		}
 	]
@@ -145,7 +149,7 @@ try:
     # 배열 -> numpy -
     for eia in emp_info_all:
         numpy_emp_info_all.append(numpy.array(eia))
-        Msg_bot(eia[0], eia[1], eia[2], eia[3], eia[5], eia[6])
+        Msg_bot(eia[0], eia[1], eia[2], eia[3], eia[5], eia[6], eia[4])
         logging.info("success")
         
 
