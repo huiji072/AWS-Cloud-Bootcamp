@@ -40,13 +40,11 @@ def Msg_bot(link, company_name, locate, job, post, desc, collectionDate):
 			}
 		},
 		{
-        # 내가 수집한 날짜, seek(회사명))추가해야 함
-        
 			"type": "section",
 			"text": {
 				"type": "mrkdwn",
 				"text": 
-                    "*사이트: SEEK*\n"
+                    "*회사명:*\n" + "SEEK" + "\n"
                     "*회사명:*\n" + company_name + "\n"
                     "*위치:*\n" + locate + "\n"
                     "*직무:*\n" + job + "\n"
@@ -57,7 +55,7 @@ def Msg_bot(link, company_name, locate, job, post, desc, collectionDate):
 		}
 	]
 )
-# 모든 채용 정보[회사명, 위치, 직무, 공고날짜, 지원서양식]
+# 모든 채용 정보[사이트명, 회사명, 위치, 직무, 공고날짜, 지원서양식, 데이터수집날짜]
 emp_info_all = []
 
 try:
@@ -154,7 +152,7 @@ try:
         
 
     # DataFrame -> csv
-    df_emp_info_all = pandas.DataFrame(numpy_emp_info_all, columns=['link', 'companyName', 'locate', 'job', 'today', 'post', 'desc'])
+    df_emp_info_all = pandas.DataFrame(numpy_emp_info_all, columns=['link', 'companyName', 'locate', 'job', 'collectionDate', 'post', 'desc'])
     # df_emp_info_all.to_csv('/Users/kimhuiji/Documents/seek_csv/seek_data.csv')
 
 except Exception as e:
