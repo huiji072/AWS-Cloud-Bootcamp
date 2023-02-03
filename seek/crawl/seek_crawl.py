@@ -44,7 +44,7 @@ def Msg_bot(link, company_name, locate, job, post, desc, collectionDate):
 			"text": {
 				"type": "mrkdwn",
 				"text": 
-                    "*회사명:*\n" + "SEEK" + "\n"
+                    "*사이트명:*\n" + "SEEK" + "\n"
                     "*회사명:*\n" + company_name + "\n"
                     "*위치:*\n" + locate + "\n"
                     "*직무:*\n" + job + "\n"
