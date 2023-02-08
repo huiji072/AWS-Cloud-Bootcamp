@@ -12,6 +12,10 @@ from slack_sdk import WebClient
 from slack_sdk.errors import SlackApiError
 import os
 from dotenv import load_dotenv
+from fastapi import FastAPI
+import requests
+
+app = FastAPI()
 
 load_dotenv()
 
@@ -79,6 +83,8 @@ def Msg_bot(link, company_name, locate, job, post, desc, collectionDate):
 		}
 	]
 )
+
+
 # 모든 채용 정보[사이트명, 회사명, 위치, 직무, 공고날짜, 지원서양식, 데이터수집날짜]
 emp_info_all = []
 
@@ -196,9 +202,17 @@ try:
 
     # DataFrame -> csv
     df_emp_info_all = pandas.DataFrame(numpy_emp_info_all, columns=data_columns)
-    df_emp_info_all.to_csv('/Users/kimhuiji/Desktop/SEEK_CROLLING/seek_data.csv')
+    df_string = df_emp_info_all.to_csv(index=False, header=False)
 
+    encoded_df_string = df_string.encode('utf-8').decode('iso-8859-1')
+
+    res = requests.post("https://httpbin.org/anything", data = encoded_df_string)
+    print(res)
+    
 except Exception as e:
     trace_back = traceback.format_exc()
     message = str(e)+ "\n" + str(trace_back)
     logging.error(message)
+
+
+    '''DataFrame to csv(파일 저장 말고)'''

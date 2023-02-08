@@ -1,0 +1,6 @@
+import tabula as tb
+import pandas as pd
+import re
+
+file = 'SAA-C03-KR V14.35.pdf'
+data = tb.read_pdf(file, area = (300, 0, 600, 800), pages = '1')
